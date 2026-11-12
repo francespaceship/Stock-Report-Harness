@@ -31,8 +31,8 @@ description: 최종 주식 리포트 HTML을 빌드한다. 리뷰 pass와 선택
    `python3 scripts/build_report.py <slug>`
    - 빌더가 plan, research, draft, review 간 프론트매터 일관성을 검증한다.
    - 빌더가 요청 기간 전체의 실제 yfinance 일봉 데이터로 `output/assets/<slug>-price-chart-v1.json`을 생성/갱신한다.
-   - 빌더가 Markdown/프론트매터를 `design/toss_design.md`의 토스 디자인 시스템으로 `output/<slug>.html`에 렌더링하고 인라인 출처 표식을 제거한다 (`sample/skhynix.html`을 참조 구성으로 사용).
-   - 레이아웃 선택: 기본은 토스 셸이다. `python3 scripts/build_report.py <slug> --layout report-shell`은 `docs/visual-system.md` 양식(목차·테마 토글·통합 리포트 시트, nvidia-recent-4m-2026-05와 동일 구조)에 히어로 이미지와 가격 차트를 유지해 렌더하며, 검증기는 generator 메타 태그로 레이아웃별 검사를 선택한다.
+   - 빌더가 Markdown/프론트매터를 기본 레이아웃인 **Dark Mode**(`docs/visual-system.md`, `output/naver-recent-1y-2026-11.html`과 동일 스타일)로 `output/<slug>.html`에 렌더링하고 인라인 출처 표식을 제거한다. 단일 통합 리포트 시트·목차·라이트/다크 테마 토글을 포함하며 히어로 이미지와 가격 차트를 유지한다.
+   - 레이아웃 선택: 기본은 `--layout dark-mode`(별칭 `report-shell`)이다. 토스 스타일이 필요할 때만 `python3 scripts/build_report.py <slug> --layout toss`를 쓰며, 이때 `design/toss_design.md`와 `sample/skhynix.html`을 참조한다. 검증기는 generator 메타 태그로 레이아웃별 검사를 선택한다.
 3. 엄격한 빌드 후 게이트를 확인하거나 명시적으로 실행한다:
    `python3 scripts/validate_report_contract.py <slug> --require-html --require-price-chart`
 4. 생성된 HTML은 반드시:

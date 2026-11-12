@@ -1,13 +1,13 @@
 # 주식 리포트 하네스
 
 <p align="center">
-  <img src="sample.png" width="380" alt="삼성전자 리포트 예시" />
+  <img src="sample.png" width="380" alt="네이버 1년 리포트 (Dark Mode)" />
 </p>
 
-자연어 한 줄이면 Toss 스타일 종목 리포트가 나옵니다.
+자연어 한 줄이면 **Dark Mode** 스타일(통합 리포트 시트·목차·라이트/다크 테마 토글) 종목 리포트가 나옵니다.
 
 ```
-/stock-goal 삼성전자 1년 분석
+/stock-goal 네이버 1년 분석
 ```
 
 Claude Code를 열고 위 명령을 입력하면, 계획 → 리서치 → 원고 → 히어로 이미지 → 4-way 리뷰 → 빌드까지 자동으로 진행되어 검증된 HTML 리포트가 생성됩니다.
@@ -16,16 +16,25 @@ Claude Code를 열고 위 명령을 입력하면, 계획 → 리서치 → 원�
 
 ## 예시 리포트 (HTML)
 
-생성된 리포트 예시입니다. 링크를 누르면 브라우저에서 바로 렌더링된 결과를 볼 수 있습니다.
+기본 레이아웃은 **Dark Mode**입니다. 아래는 이 하네스로 생성한 리포트이며, 링크를 누르면 브라우저에서 바로 렌더링된 결과를 볼 수 있습니다.
 
-| 종목 | 기간 | 미리보기 | 파일 |
-| --- | --- | --- | --- |
-| 삼성전자 | 최근 30일 | [열기](https://htmlpreview.github.io/?https://github.com/francespaceship/Stock-Report-Harness/blob/main/output/samsung-electronics-recent-30d-2026-05.html) | [`output/samsung-electronics-recent-30d-2026-05.html`](output/samsung-electronics-recent-30d-2026-05.html) |
-| 삼성전자 | 최근 1년 | [열기](https://htmlpreview.github.io/?https://github.com/francespaceship/Stock-Report-Harness/blob/main/output/samsung-electronics-recent-1y-2026-05.html) | [`output/samsung-electronics-recent-1y-2026-05.html`](output/samsung-electronics-recent-1y-2026-05.html) |
-| NVIDIA | 최근 4개월 | [열기](https://htmlpreview.github.io/?https://github.com/francespaceship/Stock-Report-Harness/blob/main/output/nvidia-recent-4m-2026-05.html) | [`output/nvidia-recent-4m-2026-05.html`](output/nvidia-recent-4m-2026-05.html) |
-| SK하이닉스 | 참고 composition | [열기](https://htmlpreview.github.io/?https://github.com/francespaceship/Stock-Report-Harness/blob/main/sample/skhynix.html) | [`sample/skhynix.html`](sample/skhynix.html) |
+| 종목 | 기간 | 스타일 | 미리보기 | 파일 |
+| --- | --- | --- | --- | --- |
+| 네이버 | 최근 1년 | Dark Mode | [열기](https://htmlpreview.github.io/?https://github.com/francespaceship/Stock-Report-Harness/blob/main/output/naver-recent-1y-2026-11.html) | [`output/naver-recent-1y-2026-11.html`](output/naver-recent-1y-2026-11.html) |
 
 로컬에서는 파일을 브라우저로 직접 열어도 됩니다. 히어로 이미지는 `output/assets/`를 상대 경로로 참조합니다.
+
+### 레이아웃
+
+| 옵션 | 스타일 | 설명 |
+| --- | --- | --- |
+| `--layout dark-mode` (기본, 별칭 `report-shell`) | Dark Mode | `docs/visual-system.md` 기준. 단일 리포트 시트, 목차, 테마 토글 |
+| `--layout toss` | Toss | `design/toss_design.md` 기준 카드형 레이아웃 |
+
+```bash
+python3 scripts/build_report.py <slug>                 # Dark Mode (기본)
+python3 scripts/build_report.py <slug> --layout toss   # Toss 스타일
+```
 
 ## 파이프라인
 

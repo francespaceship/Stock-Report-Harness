@@ -389,7 +389,7 @@ def render_toc(toc: list[tuple[str, str]]) -> str:
     return f'<nav class="toc" aria-label="목차">{links}</nav>'
 
 
-def build_report(slug: str, *, reuse_existing_price_chart: bool = False, layout: str = "toss") -> tuple[Path, list[Path], Path]:
+def build_report(slug: str, *, reuse_existing_price_chart: bool = False, layout: str = "dark-mode") -> tuple[Path, list[Path], Path]:
     paths = artifact_paths(slug)
     precheck = validate_contract(
         slug,
@@ -423,7 +423,7 @@ def build_report(slug: str, *, reuse_existing_price_chart: bool = False, layout:
         reuse_existing_price_chart=reuse_existing_price_chart,
     )
     body_html, chart_scripts, toc = transform_body(draft_body, price_payloads)
-    renderer = render_html_document_report_shell if layout == "report-shell" else render_html_document
+    renderer = render_html_document if layout == "toss" else render_html_document_report_shell
     html_doc = renderer(
         slug=slug,
         draft_fm=draft_fm,
@@ -860,12 +860,13 @@ function createTossChart(chartId, config) {{
 
 
 # Report-shell layout ----------------------------------------------------------
-# `--layout report-shell` renders the docs/visual-system.md style used by
+# `--layout dark-mode` (alias `report-shell`) renders the docs/visual-system.md style used by
 # output/nvidia-recent-4m-2026-05.html (single report sheet, TOC, theme toggle),
 # while keeping the contract elements: hero image card and yfinance price chart.
 REPORT_SHELL_GENERATOR = "stock-report-harness report-shell-builder"
 REPORT_SHELL_CSS_PATH = Path(__file__).resolve().parent / "templates" / "report-shell.css"
-LAYOUTS = ("toss", "report-shell")
+# "dark-mode" is the default layout (Naver-report style); "report-shell" is kept as a legacy alias.
+LAYOUTS = ("dark-mode", "toss", "report-shell")
 
 
 def render_html_document_report_shell(
@@ -940,7 +941,7 @@ if (window['chartjs-plugin-annotation']) {{ Chart.register(window['chartjs-plugi
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("slug")
-    parser.add_argument("--layout", choices=LAYOUTS, default="toss", help="HTML layout: toss (default, design/toss_design.md) or report-shell (docs/visual-system.md, nvidia-style)")
+    parser.add_argument("--layout", choices=LAYOUTS, default="dark-mode", help="HTML layout: dark-mode (default, docs/visual-system.md, naver-report style; alias: report-shell) or toss (design/toss_design.md)")
     parser.add_argument(
         "--reuse-existing-price-chart",
         action="store_true",

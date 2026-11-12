@@ -1,0 +1,73 @@
+{
+  "slug": "naver-recent-1y-2026-11",
+  "status": "complete",
+  "generation_method": "pollinations-api",
+  "generated_with": "Pollinations.ai gen API (model: black-forest-labs/flux.1-schnell)",
+  "model": "black-forest-labs/flux.1-schnell",
+  "prompt_files": [
+    "output\\assets\\naver-recent-1y-2026-11-hero-v1.prompt.txt",
+    "output\\assets\\naver-recent-1y-2026-11-hero-v2.prompt.txt",
+    "output\\assets\\naver-recent-1y-2026-11-hero-v3.prompt.txt"
+  ],
+  "required_images": [
+    "output\\assets\\naver-recent-1y-2026-11-hero-v1.png",
+    "output\\assets\\naver-recent-1y-2026-11-hero-v2.png",
+    "output\\assets\\naver-recent-1y-2026-11-hero-v3.png"
+  ],
+  "required_scores": [
+    "output\\assets\\naver-recent-1y-2026-11-hero-v1.score.json",
+    "output\\assets\\naver-recent-1y-2026-11-hero-v2.score.json",
+    "output\\assets\\naver-recent-1y-2026-11-hero-v3.score.json"
+  ],
+  "updated_at": "2026-11-12T05:13:09.128024+00:00",
+  "endpoint": "/v1/images/generations",
+  "base_seed": 122398,
+  "variants": [
+    {
+      "variant": 1,
+      "prompt_file": "output\\assets\\naver-recent-1y-2026-11-hero-v1.prompt.txt",
+      "image_file": "output\\assets\\naver-recent-1y-2026-11-hero-v1.png",
+      "score_file": "output\\assets\\naver-recent-1y-2026-11-hero-v1.score.json",
+      "seed": 122398,
+      "sent_prompt": "Hero image. Subject: Vast AI data center hall with rows of softly glowing server racks, abstract flowing network currents and faint parcel-conveyor lines hinting at search and logistics, cool blue tones with one warm light, a sense of heavy investment and uncertainty, calm and restrained. Composition: sector-mechanism close-up: abstract materials tied to the subject industry, showing supply, product cycle, demand and risk in one restrained composition. Premium editorial finance illustration, 16:9 magazine opening image, sophisticated depth, realistic materials, cinematic studio lighting, restrained color palette, calm and sober tone. Strictly avoid: any visible text, letters, numbers, ticker symbols, logos, watermarks, interface screenshots, dashboards, chart labels, buy or sell signals, cartoon mascots.",
+      "sent_prompt_chars": 815,
+      "response_format": "jpeg",
+      "converted_to_png": true,
+      "bytes": 1515869,
+      "retries": 0
+    },
+    {
+      "variant": 2,
+      "prompt_file": "output\\assets\\naver-recent-1y-2026-11-hero-v2.prompt.txt",
+      "image_file": "output\\assets\\naver-recent-1y-2026-11-hero-v2.png",
+      "score_file": "output\\assets\\naver-recent-1y-2026-11-hero-v2.score.json",
+      "seed": 123407,
+      "sent_prompt": "Hero image. Subject: Vast AI data center hall with rows of softly glowing server racks, abstract flowing network currents and faint parcel-conveyor lines hinting at search and logistics, cool blue tones with one warm light, a sense of heavy investment and uncertainty, calm and restrained. Composition: market-forces landscape: market currents, capital flow and industry catalysts implied through light, depth and geometry, not literal charts. Premium editorial finance illustration, 16:9 magazine opening image, sophisticated depth, realistic materials, cinematic studio lighting, restrained color palette, calm and sober tone. Strictly avoid: any visible text, letters, numbers, ticker symbols, logos, watermarks, interface screenshots, dashboards, chart labels, buy or sell signals, cartoon mascots.",
+      "sent_prompt_chars": 802,
+      "response_format": "jpeg",
+      "converted_to_png": true,
+      "bytes": 1732446,
+      "retries": 0
+    },
+    {
+      "variant": 3,
+      "prompt_file": "output\\assets\\naver-recent-1y-2026-11-hero-v3.prompt.txt",
+      "image_file": "output\\assets\\naver-recent-1y-2026-11-hero-v3.png",
+      "score_file": "output\\assets\\naver-recent-1y-2026-11-hero-v3.score.json",
+      "seed": 124416,
+      "sent_prompt": "Hero image. Subject: Vast AI data center hall with rows of softly glowing server racks, abstract flowing network currents and faint parcel-conveyor lines hinting at search and logistics, cool blue tones with one warm light, a sense of heavy investment and uncertainty, calm and restrained. Composition: risk-opportunity balance: tension between growth optionality and execution or macro risk, using contrast, layered materials and calm studio lighting. Premium editorial finance illustration, 16:9 magazine opening image, sophisticated depth, realistic materials, cinematic studio lighting, restrained color palette, calm and sober tone. Strictly avoid: any visible text, letters, numbers, ticker symbols, logos, watermarks, interface screenshots, dashboards, chart labels, buy or sell signals, cartoon mascots.",
+      "sent_prompt_chars": 811,
+      "response_format": "jpeg",
+      "converted_to_png": true,
+      "bytes": 1486050,
+      "retries": 0
+    }
+  ],
+  "generated_at": "2026-11-12T05:12:50.296395+00:00",
+  "selected_candidate": 1,
+  "selected_image": "assets/naver-recent-1y-2026-11-hero-v1.png",
+  "review_file": "output\\assets\\naver-recent-1y-2026-11-image-review.txt",
+  "finalized_at": "2026-11-12T05:13:09.128011+00:00",
+  "requested_size": "1536x1024",
+  "returned_size": "1280x768"
+}

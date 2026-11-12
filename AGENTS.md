@@ -53,6 +53,7 @@
 ## Build 계약
 - `/stock-build`는 `plan`, `research`, `draft`, `reviews`, 선택된 hero 이미지가 모두 유효할 때만 `output/<slug>.html`을 만든다.
 - build는 수동 작성이 아니라 `python3 scripts/build_report.py <slug>`로 수행한다.
+- 기본 레이아웃은 **Dark Mode**(`docs/visual-system.md`, 네이버 리포트 스타일)이며 `--layout dark-mode`와 같다. 토스 스타일은 `--layout toss`로 명시할 때만 쓴다.
 - build는 `python3 scripts/validate_report_contract.py <slug> --require-html --require-price-chart`로 pass review, 4-way review metadata, frontmatter 정합성, ticker·기간 일치, 필수 섹션, References, selected image, yfinance price chart를 검증한다.
 - 가격 차트는 요청 기간 전체의 실제 yfinance 일봉으로 만들고, 366일 이내·`YYYY-MM-DD` 오름차순 라벨·`ariaLabel`을 만족해야 한다.
 - 최종 HTML 본문에는 `[S1]`, `[N1]` 같은 인라인 참조 표식을 노출하지 말고 References만 남긴다.

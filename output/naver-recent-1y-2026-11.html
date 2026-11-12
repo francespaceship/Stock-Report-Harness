@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="generator" content="stock-report-harness report-shell-builder">
+<meta name="report-slug" content="naver-recent-1y-2026-11">
+<title>네이버 1년, 매출은 올랐는데 주가는 왜 내렸을까</title>
+<meta property="og:title" content="네이버 1년, 매출은 올랐는데 주가는 왜 내렸을까">
+<meta property="og:description" content="2025-11-12 ~ 2026-11-12, 실적·AI 투자·시장 충격으로 읽는 네이버 주가">
+<meta property="og:type" content="article">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.min.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3"></script>
+<style>
+:root {
+  --bg-base: #ffffff; --bg-surface: #f7f7f8; --bg-elevated: #ffffff;
+  --text-strong: #18181b; --text-base: #3f3f46; --text-muted: #71717a;
+  --accent: #2563eb; --up: #16a34a; --down: #dc2626; --border: #e4e4e7;
+}
+@media (prefers-color-scheme: dark) {:root {
+    --bg-base: #0a0a0a; --bg-surface: #18181b; --bg-elevated: #27272a;
+    --text-strong: #fafafa; --text-base: #d4d4d8; --text-muted: #a1a1aa;
+    --accent: #60a5fa; --up: #4ade80; --down: #f87171; --border: #3f3f46;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg-surface); color: var(--text-base);
+  font-family: "Pretendard Variable", "Pretendard", -apple-system, sans-serif;
+  font-size: 16px; line-height: 1.7;
+  font-feature-settings: "ss06"; -webkit-font-smoothing: antialiased;
+}
+main.report-shell {
+  max-width: 792px;
+  margin: 32px auto 96px;
+  padding: 0 36px 64px;
+  background: var(--bg-base);
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  box-shadow: 0 28px 80px rgba(24, 24, 27, 0.08);
+}
+h1 { font-size: 32px; font-weight: 700; letter-spacing: -0.02em; color: var(--text-strong); margin: 0 0 8px; }
+h2 { font-size: 24px; font-weight: 700; letter-spacing: -0.01em; color: var(--text-strong); margin: 48px 0 16px; }
+h3 { font-size: 18px; font-weight: 600; color: var(--text-strong); margin: 32px 0 12px; }.report-header { padding: 48px 0 28px; border-bottom: 1px solid var(--border); }.report-header.subtitle { color: var(--text-muted); margin: 8px 0 0; }.report-date { color: var(--text-muted); margin: 12px 0 0; font-size: 13px; }.hero-image {
+  margin: 28px 0 0;
+  border-radius: 20px;
+  overflow: hidden;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.06);
+}.hero-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+section {
+  margin-top: 0;
+  padding: 56px 0 0;
+  border-top: 1px solid var(--border);
+}.hero-image + section { border-top: 0; }
+section > h2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 0;
+}
+section > h2::before {
+  content: "";
+  display: inline-block;
+  width: 4px;
+  height: 1.1em;
+  border-radius: 999px;
+  background: var(--accent);
+}
+blockquote.callout {
+  margin: 16px 0; padding: 12px 16px; background: var(--bg-surface);
+  border-left: 4px solid var(--accent); border-radius: 4px; color: var(--text-base);
+}.stat-card {
+  display: flex; flex-wrap: wrap; gap: 10px; align-items: baseline;
+  padding: 14px 18px;
+  background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 12px;
+  margin: 12px 0;
+}.stat-card__label { font-size: 12px; color: var(--text-muted); font-weight: 600; }.stat-card__title { font-size: 15px; color: var(--text-strong); font-weight: 600; }.stat-card__value {
+  font-size: 28px; font-weight: 700; line-height: 1;
+  font-family: "Pretendard Variable", "Pretendard", -apple-system, sans-serif;
+  font-variant-numeric: tabular-nums;
+}.chart-container,.chart-container *, code, pre, button, input, textarea, select {
+  font-family: "Pretendard Variable", "Pretendard", -apple-system, sans-serif;
+}.stat-card--up.stat-card__value { color: var(--up); }.stat-card--down.stat-card__value { color: var(--down); }.stat-card__compare { font-size: 13px; color: var(--text-muted); }.chart-container { margin: 24px 0; padding: 16px; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 12px; }.chart-container canvas { width: 100%!important; height: 320px!important; }.word-cloud {
+  display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: center; justify-content: center;
+  margin: 18px 0; padding: 20px; background: var(--bg-elevated);
+  border: 1px solid var(--border); border-radius: 16px; line-height: 1.15;
+}.word-cloud__term {
+  display: inline-block; font-weight: 700; color: var(--accent); letter-spacing: -0.03em;
+}.word-cloud__term:nth-child(3n) { color: var(--up); }.word-cloud__term:nth-child(4n) { color: var(--down); }.chart-summary { display:flex; gap:12px; margin-bottom:12px; flex-wrap:wrap; }.chart-summary-card {
+  flex:1 1 160px; background:var(--bg-surface); border-radius:12px; padding:12px 14px;
+  border:1px solid var(--border);
+}.chart-summary-card__label { font-size:12px; color:var(--text-muted); margin-bottom:4px; }.chart-summary-card__value { font-size:20px; font-weight:600; color:var(--text-strong); font-variant-numeric:tabular-nums; }.chart-summary-card--up.chart-summary-card__value { color: var(--up); }.chart-summary-card--down.chart-summary-card__value { color: var(--down); }.chart-legend { display:flex; flex-wrap:wrap; gap:14px; margin-top:12px; font-size:12px; color:var(--text-muted); }.chart-legend__item { display:flex; align-items:center; gap:6px; }.chart-legend__line { width:14px; height:2px; display:inline-block; }.chart-legend__dot { width:10px; height:10px; border-radius:50%; display:inline-block; }.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+#references ul { list-style: none; padding-left: 0; margin: 0; }
+#references li {
+  font-size: 12px; color: var(--text-muted); margin-bottom: 10px;
+  padding: 10px 12px; background: var(--bg-surface); border: 1px solid var(--border);
+  border-radius: 10px; line-height: 1.55;
+}
+#disclaimer {
+  margin-top: 56px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+  font-size: 12px;
+  line-height: 1.65;
+  color: var(--text-muted);
+}
+#disclaimer p { margin: 0; }
+#disclaimer strong { font-size: 0; line-height: 0; }.toc {
+  position: sticky; top: 0; background: color-mix(in srgb, var(--bg-base) 88%, transparent);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border); padding: 12px 16px; font-size: 13px;
+  display: flex; gap: 16px; overflow-x: auto; white-space: nowrap;
+  z-index: 20;
+}.toc a { color: var(--text-muted); text-decoration: none; }.toc a:hover { color: var(--accent); }.theme-toggle {
+  position: fixed; top: 16px; right: 16px;
+  width: 36px; height: 36px; border-radius: 50%;
+  border: 1px solid var(--border); background: var(--bg-elevated);
+  cursor: pointer; font-size: 16px; line-height: 1;
+}
+@media print {.toc,.theme-toggle { display: none; }
+  body { font-size: 12pt; background: #fff; }
+  main.report-shell { margin: 0; padding: 0; border: 0; box-shadow: none; max-width: none; }
+  section { page-break-inside: avoid; }
+}
+@media (max-width: 640px) {
+  main.report-shell {
+    margin: 0;
+    padding: 0 18px 56px;
+    border-left: 0;
+    border-right: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }.report-header { padding-top: 40px; }
+  section { padding-top: 44px; }.stat-card { display: block; }.stat-card__label,.stat-card__title,.stat-card__value,.stat-card__compare { display: block; margin-bottom: 4px; }.hero-image { margin: 22px 0 0; border-radius: 16px; }
+}
+
+/* 긴 URL이 박스를 넘지 않도록 줄바꿈 */
+#references li, #references a, #latest-news-5 li, #latest-news-5 a { overflow-wrap: anywhere; word-break: break-word; min-width: 0; }
+</style>
+</head>
+<body>
+<button class="theme-toggle" aria-label="테마 전환" onclick="document.documentElement.toggleAttribute('data-theme-dark')">☾</button>
+<nav class="toc" aria-label="목차"><a href="#overview">개요</a> <a href="#background">배경</a> <a href="#mechanism">메커니즘</a> <a href="#latest-news-5">최신 뉴스 5건 요약</a> <a href="#투자자별-매매-동향">투자자별 매매 동향</a> <a href="#impact">영향과 적용</a> <a href="#key-takeaways">핵심 정리</a> <a href="#references">References</a></nav>
+<main class="report-shell">
+  <header class="report-header">
+    <h1>네이버 1년, 매출은 올랐는데 주가는 왜 내렸을까</h1>
+    <p class="subtitle">2025-11-12 ~ 2026-11-12, 실적·AI 투자·시장 충격으로 읽는 네이버 주가</p>
+    <p class="report-date">2026-11-12</p>
+    <figure class="hero-image"><img src="assets/naver-recent-1y-2026-11-hero-v1.png" alt="네이버 1년, 매출은 올랐는데 주가는 왜 내렸을까 hero image" loading="eager"></figure>
+  </header>
+  <blockquote>
+<p>2025년 4분기 대비 2026년 3분기에 매출은 늘었지만 영업이익은 줄었고, 주가는 큰 급등락을 거치며 고점 대비 크게 내려왔다. </p>
+</blockquote>
+<section id="overview"><h2>개요</h2><p>네이버(035420.KS)의 종가는 2025-11-12 263,500원에서 2026-11-11 194,300원으로 약 26.3% 낮아졌다. 기간 중 고점은 2026-01-29의 287,000원, 저점은 2026-11-03의 169,000원으로, 고점에서 저점까지 약 41.1% 내려갔다. 하루 등락률이 5% 이상인 날이 24일(상승 14일, 하락 10일, 11월 11일 종가까지 집계)이었을 만큼 변동성이 컸다. </p>
+<p>제목의 질문에 한 가지 원인으로 답하기는 어렵다. 아래에서 실적, 이벤트 기대, 시장 전체 충격이라는 세 요인이 함께 언급된 흐름을 살펴본다.</p>
+<div class="stat-card stat-card--down"><div class="stat-card__label">기간 수익률</div><div class="stat-card__title">2025-11-12 → 2026-11-11 종가</div><div class="stat-card__value">-26.3%</div><div class="stat-card__compare">263,500원 → 194,300원</div></div>
+
+<div class="stat-card stat-card--down"><div class="stat-card__label">고점 대비 저점</div><div class="stat-card__title">2026-01-29 → 2026-11-03</div><div class="stat-card__value">-41.1%</div><div class="stat-card__compare">287,000원 → 169,000원</div></div>
+
+<p>2026-11-12 값은 장중(약 14시)에 조회한 수치여서 장 마감 후 달라질 수 있다. 이 글의 수익률은 확정된 11월 11일 종가를 기준으로 한다. </p>
+<div class="stat-grid chart-summary"><div class="stat-card chart-summary-card stat-card--down chart-summary-card--down"><div class="stat-card__label chart-summary-card__label">기간 수익률</div><div class="stat-card__value chart-summary-card__value">-31.20%</div></div><div class="stat-card chart-summary-card stat-card--neutral chart-summary-card--neutral"><div class="stat-card__label chart-summary-card__label">시작값</div><div class="stat-card__value chart-summary-card__value">₩263,500</div></div><div class="stat-card chart-summary-card stat-card--up chart-summary-card--up"><div class="stat-card__label chart-summary-card__label">최고값</div><div class="stat-card__value chart-summary-card__value">₩287,000</div></div><div class="stat-card chart-summary-card stat-card--down chart-summary-card--down"><div class="stat-card__label chart-summary-card__label">종료값</div><div class="stat-card__value chart-summary-card__value">₩181,300</div></div></div>
+<div class="chart-wrap chart-container" role="img" aria-label="네이버 종가가 2026년 1월 말 287,000원 고점 이후 등락을 반복하며 2026년 11월 초 169,000원 저점까지 내려온 과정을 보여주는 선 차트"><canvas id="chart-0" aria-label="네이버 종가가 2026년 1월 말 287,000원 고점 이후 등락을 반복하며 2026년 11월 초 169,000원 저점까지 내려온 과정을 보여주는 선 차트"></canvas><p class="sr-only">네이버 종가가 2026년 1월 말 287,000원 고점 이후 등락을 반복하며 2026년 11월 초 169,000원 저점까지 내려온 과정을 보여주는 선 차트</p></div>
+
+<h3>큰 움직임이 있었던 날</h3>
+<ul>
+<li>2026-03-04: 11.86% 하락. 같은 시기 코스피도 이틀 연속 급락했다는 보도가 있었다. </li>
+<li>2026-05-29와 06-01: 각각 14.15%, 16.03% 상승. 05-29에 엔비디아 CEO 방한과 네이버 의장 회동 기대감이 보도됐다. </li>
+<li>2026-06-09와 06-10: 각각 7.89%, 11.67% 하락. 방한 일정이 끝난 뒤 차익실현(올랐던 주식을 팔아 이익을 확정하는 거래)이 나왔다는 보도가 있었고, 06-10에는 코스피도 4%대 내렸다. </li>
+<li>2026-06-23: 8.78% 하락. 코스피가 하루 약 9.9% 폭락했다는 보도와 같은 날이다. </li>
+<li>2026-07-23: 11.73% 상승. AI 인프라 관련 대형 계약 기대감이 기사 제목에 언급됐다. </li>
+</ul>
+<p>이 날짜들은 "기사와 같은 날 일어났다"는 뜻이지, 그 기사가 주가 변동의 유일한 원인이라는 뜻은 아니다.</p>
+<hr></section>
+<section id="background"><h2>배경</h2><ul>
+<li>네이버는 검색·광고, 커머스, 핀테크, 콘텐츠, 클라우드·AI 사업을 함께 운영하는 국내 대표 인터넷 기업이다.</li>
+<li>분기 매출은 2025년 4분기 3조1,951억원에서 2026년 3분기 3조4,724억원으로 늘었다. </li>
+<li>하지만 영업이익은 2025년 4분기 6,106억원에서 2026년 2분기 5,203억원, 3분기 4,513억원으로 낮아졌다. </li>
+<li>3분기 영업이익은 전년 대비 20.9% 감소했고, 보도는 AI 투자 확대를 주된 이유로 들었다. </li>
+<li>2026년 1분기 매출은 3조2,411억원으로 전년 대비 16.3% 늘었다. </li>
+<li>이 기간 시장 전체도 흔들렸다. 3월·6월·10월에 코스피가 단기간 크게 내린 구간이 있었다. </li>
+</ul>
+<p><strong>용어 풀이</strong></p>
+<ul>
+<li><strong>영업이익:</strong> 매출에서 본업에 들어간 비용을 뺀 이익이다.</li>
+<li><strong>종가:</strong> 그날 거래가 끝났을 때의 마지막 가격이다.</li>
+<li><strong>플랫폼 이익률:</strong> 플랫폼 사업의 매출 대비 이익 비율이다.</li>
+<li><strong>코스피:</strong> 한국 유가증권시장의 대표 주가지수다.</li>
+<li><strong>장중:</strong> 거래가 진행 중인 시간대이며, 마감 전 가격은 바뀔 수 있다.</li>
+<li><strong>AI 에이전트:</strong> 이용자의 요청을 받아 쇼핑·예약·결제 같은 작업을 이어서 처리하는 AI 서비스를 뜻한다.</li>
+<li><strong>순매수:</strong> 일정 기간 산 수량에서 판 수량을 뺀 값이다.</li>
+<li><strong>컨퍼런스콜:</strong> 실적 발표 뒤 경영진이 투자자 질문에 답하는 전화 설명회다.</li>
+<li><strong>기업결합 심사:</strong> 두 회사가 합칠 때 시장 경쟁을 해치지 않는지 공정거래위원회가 살펴보는 절차다. 두나무는 네이버파이낸셜과 기업결합 심사를 받고 있는 회사다. </li>
+</ul>
+<hr></section>
+<section id="mechanism"><h2>메커니즘</h2><h3>1. 매출이 늘어도 이익이 줄 수 있는 이유</h3>
+<p>회사가 AI 데이터센터, 물류 같은 곳에 큰돈을 쓰면 장비 운영비, 인건비, 감가상각비(설비 가격을 사용 기간에 나눠 비용으로 잡는 것) 같은 비용이 늘어 영업이익이 줄어들 수 있다. 비용이 매출보다 빨리 늘면 매출이 커져도 영업이익은 줄어든다. 2026년 2분기에는 매출이 분기 기준 역대 최대인 3조3,888억원이었지만 영업이익은 전년보다 0.2% 줄었다. 3분기에는 물류 자회사 설립과 연내 AI 에이전트 출시 계획이 함께 언급됐고, 물류에는 1조원 투자가 보도됐다. </p>
+<p>경영진은 컨퍼런스콜에서 플랫폼 이익률 30% 회복이 쉽지 않고 25% 유지를 목표로 한다고 밝힌 것으로 보도됐다. 일반적으로 투자자들은 "지금의 투자가 언제 이익으로 돌아오는가"를 가격에 반영하려는 경향이 있어, 이 시점이 불확실하면 주가가 흔들릴 수 있다.</p>
+<h3>2. 기대가 앞서고 되돌림이 따르는 이벤트 장세</h3>
+<p>2026년 5월 말 엔비디아 CEO 방한 기대감이 보도되던 때 이틀 연속 급등했고(05-29 +14.15%, 06-01 +16.03%), 방한 일정이 끝난 뒤인 06-09와 06-10에는 이틀 연속 하락했다(06-10 -11.67%). 06-10에는 코스피도 4%대 하락해 시장 전체 요인이 섞여 있다. 이처럼 "소식에 대한 기대"로 오른 가격은 소식이 지나면 상승분의 일부가 줄어들기도 한다.</p>
+<p>2026년 11월에는 저점(11-03) 이후 11-05에 8.26% 반등했고, 11-06에는 엔비디아가 약 1조3,400억원의 신주 대금을 납입해 네이버의 3대 주주가 되었다는 보도가 나왔다. 납입 보도는 반등 이후라 이 기사만으로 반등을 설명하기는 어렵고, 협력 기대는 11-03 기사에서 이미 거론됐다. 3분기 실적 발표일(11-12)에는 주가가 장중 하락했고, Traders Union은 매출이 늘었는데도 실적이 실망스러웠다고 전했다. </p>
+<h3>3. 시장 전체의 충격</h3>
+<p>개별 종목의 재료와 별개로 코스피 전체가 급락하면 대형주도 함께 흔들릴 수 있다. 2026년 6월 23일 코스피가 하루 약 9.9% 하락했다는 보도와 네이버의 8.78% 하락이 같은 날이었다. 10월에는 한 주 동안 코스피가 14.5% 하락했다는 보도(10-18 기사)가 있었고, 네이버는 2~3주 뒤인 11월 3일에 저점에 닿았다. 두 사건 사이의 직접적인 인과는 확인하지 못했다. </p>
+<hr></section>
+<section id="latest-news-5"><h2>최신 뉴스 5건 요약</h2><p>수집한 최신 100건은 3분기 실적 발표일(11-12) 하루 중 일부 시간대의 기사라 물류 투자와 수익성 보도에 치우쳐 있다. 시각은 한국시간(KST)이며, 링크는 Google News가 제공한 기사 링크(원문 매체 URL이 아닌 제공자 링크)다. </p>
+<ol>
+<li><strong>2026-11-12 13:58 KST · KB Think · 물류 투자</strong> — <a href="https://news.google.com/rss/articles/CBMickFVX3lxTE0yRGhIS25vOTZqZnhtWTB4cjBiYVd2MEFYbTQ5Q2tZMDNQUkRsRnU0ZWlVNzcxZU9DMktOUzlBSmtOVmUyRUFiTFJFYWdLVl9YT2Y1bmtERk9WVnJ2QUNlNlBBTGdURnpzSFV2d2tZLVZ6UQ?oc=5">네이버, 물류 자회사 세워 쿠팡 추격…1조 투자 부담은</a> 
+ - 요약: 네이버가 물류 자회사를 세워 배송 경쟁력을 높이려 하며, 1조원 투자에 따른 부담이 함께 거론됐다.
+ - 가격/수급 해석: 투자 확대는 중장기 경쟁력 요인이지만 단기 이익률에는 부담으로 읽힐 수 있다.</li>
+<li><strong>2026-11-12 13:55 KST · Investing.com 한국어 · 주가 하락 배경</strong> — <a href="https://news.google.com/rss/articles/CBMid0FVX3lxTFBDRHBQOXZfZGhZSDZBU1JUaW1wYVdQUmJaeC0yZFdnVVRDY1o3dEQtNDFsaTRyaExDc1Bvem84NG8yWWoxSDdMTW9zcF9WMUFLR1pZcXhtS1dQby1LeUdnTWFBeGoxUzhZOXN2YVFtY1VCZTBycGJj?oc=5">네이버 주가, 오늘 왜 하락하나?</a> 
+ - 요약: 제목 기준으로 실적 발표일 네이버 주가 하락의 배경을 다루는 기사다(본문은 확인하지 않았다).
+ - 가격/수급 해석: 같은 날 하락을 설명하는 보도가 여러 건 있었다는 점만 확인했고, 원인은 단정하기 어렵다.</li>
+<li><strong>2026-11-12 13:50 KST · 매일일보 · 물류 투자</strong> — <a href="https://news.google.com/rss/articles/CBMiZEFVX3lxTE5zaUV4b0tZd0txQTExRFVDcGxlb3JBeHIxTWhkSWMxbVBwY0tFU3lOWVZWQUtxR3Itcm1GejJMOU4zRThCLVBublo3NzZpRTg2MFk3RjBNaXNIMEF2NjBHQ3RIaG4?oc=5">네이버, 2030년까지 물류에 1兆 투자…쿠팡과 배송 경쟁 본격화</a> 
+ - 요약: 2030년까지 물류에 1조원을 투자해 배송 경쟁에 본격 나선다는 내용이다.
+ - 가격/수급 해석: 쿠팡 등과의 경쟁 구도가 변수이며, 투자 효과가 나타나기까지 시간이 걸릴 수 있다.</li>
+<li><strong>2026-11-12 13:47 KST · 뉴스저널리즘 · 수익성</strong> — <a href="https://news.google.com/rss/articles/CBMia0FVX3lxTE5MSXlTY3NiWmJ4WTE2aEJVRFY2eUpLUFlHdEpielFPcWFIS2FoYllxdU1QNFlwb3Z1dlZxc25LbFVpdnFJZTg2Tk5JUjVkT05lajVtWXRwdmNlNkRTc1VzUlBWd2dfaUJGN1Bn?oc=5">네이버 외형 성장에도 수익성 뒷걸음…AI 투자비 부담 확대</a> 
+ - 요약: 외형은 커졌지만 수익성은 뒷걸음쳤고 AI 투자비 부담이 커졌다는 분석이다.
+ - 가격/수급 해석: 이익 추세가 이번 발표일 보도의 주된 쟁점이었다는 점을 보여 준다.</li>
+<li><strong>2026-11-12 13:44 KST · 알파경제 · 3분기 실적</strong> — <a href="https://news.google.com/rss/articles/CBMibkFVX3lxTE1oTnpVOGxkamJXOGZTSzlvUkZkeVVsWmpVLWdkY3ctZzNOZ3dZR0J4YUFpOV9fUlozeS1XTmJ3MEg3eUp1R1VJWF9kZU1zM2xwRDN2NTh6b3RaUjNnRnNYSFpXajZwNFFzS1IyY1FB?oc=5">네이버, 역대 분기 최대 매출 3조4724억원…AI 투자에 영업익 20.9% 감소</a> 
+ - 요약: 3분기 매출 3조4,724억원은 분기 기준 역대 최대지만 영업이익은 20.9% 줄었다는 보도다. 
+ - 가격/수급 해석: 같은 날 주가는 장중 하락했고, 한 매체는 매출 증가에도 실망스러운 실적이라고 보도했다. </li>
+</ol>
+<hr></section>
+<section id="투자자별-매매-동향"><h2>투자자별 매매 동향</h2><p>한국 상장 종목은 외국인·기관·개인의 매매 동향을 함께 보는 것이 일반적이지만, 이번 리포트에서는 투자자별 매매 수치를 확보하지 못했다. 그래서 주가의 반등이나 하락이 어느 투자자의 매매에서 나왔는지는 설명하지 못한다. 뉴스 보도에서 외국인이 네이버를 많이 순매수했다는 기사(11-11)가 있었지만 기간과 수치는 확인하지 못했고 기관·개인 동향도 확인하지 못했다. </p>
+<hr></section>
+<section id="impact"><h2>영향과 적용</h2><ul>
+<li><strong>확인할 변수 1, 이익 추세:</strong> 매출 성장이 영업이익 개선으로 이어지는지는 다음 분기 실적에서 확인할 수 있다. 경영진이 제시한 플랫폼 이익률(플랫폼 사업의 이익 비율) 25% 유지 목표가 지켜지는지가 확인 포인트다. </li>
+<li><strong>확인할 변수 2, AI·엔비디아 협력의 실행:</strong> 기대감이 앞서 오른 뒤 상승분의 일부가 줄어든 사례가 있었다(06-09~10, 06-10에는 시장 전체 하락 포함). 협력이 실제 매출·계약으로 구체화되는지가 확인 포인트다. </li>
+<li><strong>확인할 변수 3, 규제:</strong> 네이버파이낸셜과 두나무의 기업결합 심사는 결과와 조건이 확정되지 않았다. </li>
+<li><strong>리스크:</strong> 시장 전체 급락 구간에서는 개별 호재가 가려질 수 있고, 이 글의 뉴스 표본과 가격 해석에는 한계가 있다. </li>
+<li><strong>읽는 법:</strong> 기사의 제목과 같은 날 주가가 움직였다고 해서 인과관계가 입증된 것은 아니다. 가격, 실적, 시장 환경을 함께 보는 습관이 필요하다.</li>
+</ul>
+<hr></section>
+<section id="key-takeaways"><h2>핵심 정리</h2><ol>
+<li>1년 동안 종가는 약 26.3% 낮아졌고, 고점 대비 저점 낙폭은 약 41.1%였다. </li>
+<li>매출은 늘었지만 2026년 2분기 영업이익은 정체, 3분기 영업이익은 감소했다. </li>
+<li>엔비디아 관련 보도와 같은 시기에 급등락이 반복됐고 시장 전체 급락도 겹쳤다. 원인은 단정하기 어렵다. </li>
+<li>앞으로는 이익률, 협력의 실제 성과, 규제 결과를 확인할 변수로 볼 수 있다.</li>
+</ol>
+<hr></section>
+<section id="references"><h2>References</h2><ul>
+<li>NAVERCorp. — 네이버, 25년 4분기 매출액 3조 1,951억 원, 영업이익 6,106억 원… 연간 매출액 12조 350억 원 (2026-02-06) — https://news.google.com/rss/articles/CBMibkFVX3lxTFA1UVE0QnB2ejhBMmlYYnV5RC1KcUs4bi1YZUxTaE14QnBEdDBQSzc0ZkJoZERCRVFtclJrV0hmYmZQN1E0NWRzbmIyRUN1WHZWbjRtS1lDejFyeGphYlNFbzRfVzVhSnI5Qnd1azhB?oc=5 — Tier B </li>
+<li>디일렉 — 네이버, 올해 1분기 매출 3조2411억원...전년 대비 16.3% 성장 (2026-04-30) — https://news.google.com/rss/articles/CBMiZkFVX3lxTE9GVHhpX0lSa0lFQkllZ1d6NVM4MFpRTnFZR1JBTE5tZ3JJN0hxTE42alNCajJudklKQTFRY28xdEtWeEpobFVRYXBLcE9sT00yNk9DSUkzSTV2bHFUMkQtekVxelRHQQ?oc=5 — Tier B </li>
+<li>NAVERCorp. — 네이버, 2026년 2분기 매출액 3조 3,888억 원, 영업이익 5,203억 원 기록 (2026-08-07) — https://news.google.com/rss/articles/CBMickFVX3lxTE1pakhUWXBHR3oydVlYeG82ME9lYjhrMWJrVUppT3BFbTE4cmRMMWV5ZTctdkZIRTRjSl96V1ktd0dSQkxTeU9RZkR0NU5DdVZsMXBsdFhScGNCNnJRVklfRzZjMHlNczdPMmd2NEpYZ0FiZw?oc=5 — Tier B </li>
+<li>지디넷코리아 — 네이버, 2분기 매출 두자릿수 성장…AI 투자로 영업익은 0.2%↓ (2026-08-07) — https://news.google.com/rss/articles/CBMiVkFVX3lxTFAyXy1qbG1uMU02THFSQk5tdUxMOWFfVjFqOWZDa204cVBjcFlZMnZVU1otQ0RGZTJ1X284NzRXZ2NBS09ibGU2dUV4QnpHZHk4OFRJUGVB?oc=5 — Tier B </li>
+<li>디지털투데이 — 네이버, 3분기 매출 3조4724억원…AI 투자 확대로 영업익 20.9%↓ (2026-11-12) — https://news.google.com/rss/articles/CBMic0FVX3lxTE1oVkZDeVpNU0s4N3Jpa0VJZ1ROUkhBTWdQNzJvZXQxdk42c2ZYRzJKT0kxVUFURGhaa3hzRG0tOHV3Z25qLTFmcXk1Y3oyOHRtN2l1Zks2bUVWZUpubjgzUXNsUmdzUGFFdS0zN0t5LXF4UDQ?oc=5 — Tier B </li>
+<li>Chosunbiz — 네이버, 7분기 연속 역대 최대 매출 …최수연 대표 “배송 경쟁력 위해 물류 자회사 만든다” (2026-11-12) — https://news.google.com/rss/articles/CBMilgFBVV95cUxQVW9VYWNqei0wczJfRjBKcldsTDBUdlcybWlWaHkyX1RQdHFrbk90WF9XM1NBWlltV1NDTGVsT01lSjFRX3h6LUpZQjBwbFZadUg5QkpGQ1RBU3ZOY3U0VV9GZDBmYVM0WEgwSjU5VXhsRmhPeW9fWTc5aTc3cjlEWF9Bdm9yXzczS2QyZEhzNmxfcGpSYnfSAZYBQVVfeXFMUFVvVWFjanotMHMyX0YwSnJXbEwwVHZXMm1pVmh5Ml9UUHRxa25PdFhfVzNTQVpZbVdTQ0xlbE9NZUoxUV94ei1KWUIwcGxWWnVIOUJKRkNUQVN2TmN1NFVfRmQwZmFTNFhIMEo1OVV4bEZoT3lvX1k3OWk3N3I5RFhfQXZvcl83M0tkMmRIczZsX3BqUmJ3?oc=5 — Tier B </li>
+<li>IT조선 — 네이버 “플랫폼 이익률 30% 회복 쉽지 않아… 25% 유지 목표” [네이버 컨콜] (2026-11-12) — https://news.google.com/rss/articles/CBMicEFVX3lxTE1ZMFVSSFlVVU84djNUcTJJT1JIQUhDd285RXFDMlAyUnpsNDg2WGN4blhadDNUSUt6ZzhNdVRzRW1wX1loRVBJajZRODA5ZmlrZE9CbHNVV2haQ21haXJMNy1XRlhZTWpmY0xQcFJIRGjSAXRBVV95cUxQTllBcGNWVXNoWU5oaXhfWE1NWXN6Smgyb0d4Q3NsTE82Y1NIMHBTcVYwR0ZTOEhnME1uMFZZYWk3WkJlM1c5UlQ0V245VUswNlE5NzU3aDctcmZ5Q28zcVJ5Z0J4dVBublpGYkFMOGw3Wk1ocQ?oc=5 — Tier B </li>
+<li>이데일리 — 엔비디아, 네이버에 1.34조 납입…3대 주주로 'AI 동맹' 본격화 (2026-11-06) — https://news.google.com/rss/articles/CBMigAFBVV95cUxNYndla2NFVlV4dWVjc3FDWE9yWElucS1hbl9vcHVKcmRKNFFmU3MteV9GMzVvd2hCd3NsazZEN1J4RkhDZGREN1QyRGpFaFVCTmhYOHBlVkRiUzFrQ091V18xYWRHNndTYlRSSnRmUjBIRGd6ZXJGcWo4aE03c200aA?oc=5 — Tier B </li>
+<li>비즈니스포스트 — 네이버 주가 장중 13%대 올라, 엔비디아 젠슨 황과 이해진 만남 기대감 반영 (2026-05-29) — https://news.google.com/rss/articles/CBMic0FVX3lxTFBEWUxpVEdWVFl1Wmt3Vm1oazFBRkZmOVg5dkxGTkZFcGVfRm10bFNXVk5uNWF1c3FuNXAzSUtZZ3dZRS1HM0I0QktDVy01bzRreFBwVE93cnBYY1BIVEdjWUd2dzktTUVTNUZqMWpwY1h0dzA?oc=5 — Tier B </li>
+<li>비즈니스포스트 — [오늘의 주목주] '차익실현' 네이버 주가 11%대 급락, 코스피 4%대 내린 7730선 마감 (2026-06-10) — https://news.google.com/rss/articles/CBMic0FVX3lxTE5xQXhrc1dFYUUyN3BhbE9GdDJLemZDUkp6akxuLW5TX3NvVUY5SlhJbHhrMlcwdFQxakFyQU94NVgxRmpCbUFkT0RiTUV6YVhJenhDYTNnS3VHRkZLeHlVN18wekU1OEU1WlVsV1AyaGV4WjQ?oc=5 — Tier B </li>
+<li>한겨레 — 코스피 9.9% 폭락, 강세장 종료 신호?…그래도 ‘개미’는 샀다 (2026-06-24) — https://news.google.com/rss/articles/CBMiZ0FVX3lxTE5QdDRUd2JwalJueVBoZkVJVWJsOEh0VXkxVUhEOGVGSzhEZjZsME12enpZcEU2MS12dWFGRDZTcTA5RzRGQngyVjZPUGpMYlVUYWpQRFNTQnI0UXlmU1Z1bUhUU2tHeVk?oc=5 — Tier B </li>
+<li>연합뉴스 — 코스피 이틀 연속 급락에 확산하는 공포…개미들 매수세 약화 (2026-03-04) — https://news.google.com/rss/articles/CBMiW0FVX3lxTE5KUEd2WVhibkR4VUdERVRqUkU0b1dMbmhERGVlN21iNWd6TTNabzhIRFhJVk5USXFIRTBkTGppV1Z0X09PN05EZ0xKLXB2TFhYOGJqNjhPSm9RSVXSAWBBVV95cUxQeTdIY3JlRTdoaFV5QndqS3FmTEFSNVl1bkZNT24yR093RmZ2M3VuY3o3RzBQSnZsakZkV1AtcjVpeDl4LUFJZlhrWWxYV09mYlFjbVFvMnladktoSmI5Ul8?oc=5 — Tier B </li>
+<li>디지털데일리 — [DD's톡] 네이버 주가 21만원선 급등…브룩필드발 'AI 빅딜' 기대↑ (2026-07-23) — https://news.google.com/rss/articles/CBMiYkFVX3lxTE9IdGR3UnlUUDFoZEZhUFNoc0E4dEpXN3gzMjdGNHFyQ3BjM3pjLUd0YW5QaHlsMGVSY28zQ3RneGdJUDltZnV0dHJXNzZoTGI0UVdScVA3UXNWWEdBSXRBZ1pB?oc=5 — Tier B </li>
+<li>한겨레 — 공정위, 네이버-두나무 기업결합 심의 착수…18일 결론 나나 (2026-11-10) — https://news.google.com/rss/articles/CBMickFVX3lxTFB6R0c3N2lwN3F1TGlxVWxaM0l2YTg1bm9seGlIblRKcHd5SkJCWU5JR0tCS3RfM0dCQUNVQTgydDlhN0VqekVqUXBBQ2tCT2pfT185b2RoTXZ6Q25UVTczZW54a3JKWG1ERi1qNzNVY29udw?oc=5 — Tier B </li>
+<li>한국경제 — 외국인, 국내 증시서 네이버 가장 많이 샀다… "아시아판 코어위브로 재평가 기대" (2026-11-11) — https://news.google.com/rss/articles/CBMiWkFVX3lxTE1FZXpaYXhlM2JTV0h6TVd6Q3F3M2VMc0FmRHdXUnpORnAtNjVLVXRqczVTM0YyWTVuUUhVX2pHcFRwNmllSUZwWmtDbHJoVVJRZEdFLWNQSXNmdw?oc=5 — Tier B </li>
+<li>연합인포맥스 — '젠슨 황' 등에 업은 네이버, 엔비디아 협력으로 반등 모멘텀 얻나 (2026-11-03) — https://news.google.com/rss/articles/CBMicEFVX3lxTE9DRGszRDVsYTFKeVdZR09HalpIVGh2OHkzZHM3OE5TNUJ2TU43YVQtMUZnVlh3NEFZS3pickVxa2x5ZjdxYlhvSTRSb0NnWEh3QTE2TTlTODFfdzRNZFQ0ZngzX1RsbWxPdDcyWmFrYUY?oc=5 — Tier B </li>
+<li>매일경제 — “내 계좌 다 녹았어요”…지난주 14.5% 폭락 코스피, 언제나 회복? (2026-10-18) — https://news.google.com/rss/articles/CBMiUkFVX3lxTFBSNTMwczJIVGxhRnM4bjdaZWplOGw2NjZad0RMUF9tNndWdVltTUc5eVJTTHVfdUR1QWJYcTRhbWlWeXZMWnpaNHhweDlYbEdRblE?oc=5 — Tier B </li>
+<li>Traders Union — 매출 증가에도 실망스러운 실적에 네이버 주가 6% 넘게 급락 (2026-11-12) — https://news.google.com/rss/articles/CBMijwFBVV95cUxOQjNiTXVkWnhqV3JBVmp0dVBmT0RlMFFEektrUENXR2FhalpfMDBCNFVUWmxKX1NJU09jMGp6REwxVTcyU2pCOEhUS0RUaHR0RnVWT3Ayd0FDeDk2eDQzQkdvT3RReHBMOF9tY1ppWUpQcktnNmc3OHZuQnVQRVRSdkhIempTVFB3Qi15aXhpaw?oc=5 — Tier C </li>
+<li>금융신문 — 젠슨 황도 소용없었다…네이버 주가 하루 만에 꺾인 이유 (2026-06-10) — https://news.google.com/rss/articles/CBMifEFVX3lxTE5VYmFfSVNad3RMbmFKOGZvYmZKNnB2RUZEY3JXTTRkRDY0ZFIwaXpLNUN3dkJmVndZblRCLW9HUWJ2bHNXcEQ2NDJzel9NX2t4VXM2N0NvdjVwYk9RNHhPVjdPamQwUnNDTV9IZmhGeEstMHM4eUcyZFhGSHc?oc=5 — Tier B </li>
+<li>JTBC — 엔비디아 손잡은 네이버…젠슨 황 떠나자 주가 ‘휘청’ (2026-06-11) — https://news.google.com/rss/articles/CBMiVEFVX3lxTE04TEMtUGJpRmctYmwxeVdncldnWkswTG83U0JEc2dFZHNZWkMtejhJeDk2YWpHZVJPNFgxeGNCdXZlN3hBd2dHTE1PZnJYRjUtblpjUQ?oc=5 — Tier B </li>
+<li>서울경제 — 공정위, 네이버파이낸셜·두나무 합병 조건부 승인 추진 (2026-11-11) — https://news.google.com/rss/articles/CBMiUkFVX3lxTE9zX2VhczlDMGl3bjV6SFVFRnM1ejczYjF5UXR1X3dGNFcxdUhER1pQV0F1LTBwdDJwVlhwTm91cGFEN0VNSlhabnR1YUVnZmdLd0HSAVNBVV95cUxPa3lZWjJGSktlRklQdU5YVHNqTHNyU1hIWm1QMmZ0SGdndkkxQ0tPMXQ2cXVyaklUR3hHVUprRXBPVVpjYzhWUm1oR0NsN3pHeHZHdw?oc=5 — Tier B </li>
+<li>yfinance 1.4.0 — 035420.KS 일봉 종가 (2026-11-12) — https://finance.yahoo.com/quote/035420.KS/history — Tier B </li>
+<li>Google News RSS — 네이버 관련 뉴스 100건 원자료 (2026-11-12) — https://news.google.com/rss/search?q=네이버+주가&amp;hl=ko&amp;gl=KR&amp;ceid=KR:ko — Tier B </li>
+<li>KB Think — 네이버, 물류 자회사 세워 쿠팡 추격…1조 투자 부담은 (2026-11-12) — https://news.google.com/rss/articles/CBMickFVX3lxTE0yRGhIS25vOTZqZnhtWTB4cjBiYVd2MEFYbTQ5Q2tZMDNQUkRsRnU0ZWlVNzcxZU9DMktOUzlBSmtOVmUyRUFiTFJFYWdLVl9YT2Y1bmtERk9WVnJ2QUNlNlBBTGdURnpzSFV2d2tZLVZ6UQ?oc=5 — Tier B </li>
+<li>Investing.com 한국어 — 네이버 주가, 오늘 왜 하락하나? (2026-11-12) — https://news.google.com/rss/articles/CBMid0FVX3lxTFBDRHBQOXZfZGhZSDZBU1JUaW1wYVdQUmJaeC0yZFdnVVRDY1o3dEQtNDFsaTRyaExDc1Bvem84NG8yWWoxSDdMTW9zcF9WMUFLR1pZcXhtS1dQby1LeUdnTWFBeGoxUzhZOXN2YVFtY1VCZTBycGJj?oc=5 — Tier C </li>
+<li>매일일보 — 네이버, 2030년까지 물류에 1兆 투자…쿠팡과 배송 경쟁 본격화 (2026-11-12) — https://news.google.com/rss/articles/CBMiZEFVX3lxTE5zaUV4b0tZd0txQTExRFVDcGxlb3JBeHIxTWhkSWMxbVBwY0tFU3lOWVZWQUtxR3Itcm1GejJMOU4zRThCLVBublo3NzZpRTg2MFk3RjBNaXNIMEF2NjBHQ3RIaG4?oc=5 — Tier B </li>
+<li>뉴스저널리즘 — 네이버 외형 성장에도 수익성 뒷걸음…AI 투자비 부담 확대 (2026-11-12) — https://news.google.com/rss/articles/CBMia0FVX3lxTE5MSXlTY3NiWmJ4WTE2aEJVRFY2eUpLUFlHdEpielFPcWFIS2FoYllxdU1QNFlwb3Z1dlZxc25LbFVpdnFJZTg2Tk5JUjVkT05lajVtWXRwdmNlNkRTc1VzUlBWd2dfaUJGN1Bn?oc=5 — Tier B </li>
+<li>알파경제 — 네이버, 역대 분기 최대 매출 3조4724억원…AI 투자에 영업익 20.9% 감소 (2026-11-12) — https://news.google.com/rss/articles/CBMibkFVX3lxTE1oTnpVOGxkamJXOGZTSzlvUkZkeVVsWmpVLWdkY3ctZzNOZ3dZR0J4YUFpOV9fUlozeS1XTmJ3MEg3eUp1R1VJWF9kZU1zM2xwRDN2NTh6b3RaUjNnRnNYSFpXajZwNFFzS1IyY1FB?oc=5 — Tier B </li>
+</ul>
+<hr></section>
+  <footer id="disclaimer" aria-label="투자 유의사항"><p>이 리포트는 교육 및 정보 제공 목적을 위해 작성되었습니다.
+특정 종목의 매수·매도를 권유하지 않으며 투자 자문이 아닙니다.
+모든 투자 판단과 그 결과에 대한 책임은 투자자 본인에게 있습니다.
+리포트 내용은 2026-11-12 기준 공개 정보를 바탕으로 정리되었으며,
+이후 변경된 사실이 반영되지 않았을 수 있습니다.</p></footer>
+</main>
+<script>Chart.defaults.font.family = '"Pretendard Variable", "Pretendard", -apple-system, sans-serif';
+if (window['chartjs-plugin-annotation']) { Chart.register(window['chartjs-plugin-annotation']); }
+new Chart(document.getElementById("chart-0"), {"type": "line", "data": {"labels": ["2025-11-12", "2025-11-13", "2025-11-14", "2025-11-17", "2025-11-18", "2025-11-19", "2025-11-20", "2025-11-21", "2025-11-24", "2025-11-25", "2025-11-26", "2025-11-27", "2025-11-28", "2025-12-01", "2025-12-02", "2025-12-03", "2025-12-04", "2025-12-05", "2025-12-08", "2025-12-09", "2025-12-10", "2025-12-11", "2025-12-12", "2025-12-15", "2025-12-16", "2025-12-17", "2025-12-18", "2025-12-19", "2025-12-22", "2025-12-23", "2025-12-24", "2025-12-26", "2025-12-29", "2025-12-30", "2026-01-02", "2026-01-05", "2026-01-06", "2026-01-07", "2026-01-08", "2026-01-09", "2026-01-12", "2026-01-13", "2026-01-14", "2026-01-15", "2026-01-16", "2026-01-19", "2026-01-20", "2026-01-21", "2026-01-22", "2026-01-23", "2026-01-26", "2026-01-27", "2026-01-28", "2026-01-29", "2026-01-30", "2026-02-02", "2026-02-03", "2026-02-04", "2026-02-05", "2026-02-06", "2026-02-09", "2026-02-10", "2026-02-11", "2026-02-12", "2026-02-13", "2026-02-19", "2026-02-20", "2026-02-23", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06", "2026-03-09", "2026-03-10", "2026-03-11", "2026-03-12", "2026-03-13", "2026-03-16", "2026-03-17", "2026-03-18", "2026-03-19", "2026-03-20", "2026-03-23", "2026-03-24", "2026-03-25", "2026-03-26", "2026-03-27", "2026-03-30", "2026-03-31", "2026-04-01", "2026-04-02", "2026-04-03", "2026-04-06", "2026-04-07", "2026-04-08", "2026-04-09", "2026-04-10", "2026-04-13", "2026-04-14", "2026-04-15", "2026-04-16", "2026-04-17", "2026-04-20", "2026-04-21", "2026-04-22", "2026-04-23", "2026-04-24", "2026-04-27", "2026-04-28", "2026-04-29", "2026-04-30", "2026-05-04", "2026-05-06", "2026-05-07", "2026-05-08", "2026-05-11", "2026-05-12", "2026-05-13", "2026-05-14", "2026-05-15", "2026-05-18", "2026-05-19", "2026-05-20", "2026-05-21", "2026-05-22", "2026-05-26", "2026-05-27", "2026-05-28", "2026-05-29", "2026-06-01", "2026-06-02", "2026-06-04", "2026-06-05", "2026-06-08", "2026-06-09", "2026-06-10", "2026-06-11", "2026-06-12", "2026-06-15", "2026-06-16", "2026-06-17", "2026-06-18", "2026-06-19", "2026-06-22", "2026-06-23", "2026-06-24", "2026-06-25", "2026-06-26", "2026-06-29", "2026-06-30", "2026-07-01", "2026-07-02", "2026-07-03", "2026-07-06", "2026-07-07", "2026-07-08", "2026-07-09", "2026-07-10", "2026-07-13", "2026-07-14", "2026-07-15", "2026-07-16", "2026-07-20", "2026-07-21", "2026-07-22", "2026-07-23", "2026-07-24", "2026-07-27", "2026-07-28", "2026-07-29", "2026-07-30", "2026-07-31", "2026-08-03", "2026-08-04", "2026-08-05", "2026-08-06", "2026-08-07", "2026-08-10", "2026-08-11", "2026-08-12", "2026-08-13", "2026-08-14", "2026-08-18", "2026-08-19", "2026-08-20", "2026-08-21", "2026-08-24", "2026-08-25", "2026-08-26", "2026-08-27", "2026-08-28", "2026-08-31", "2026-09-01", "2026-09-02", "2026-09-03", "2026-09-04", "2026-09-07", "2026-09-08", "2026-09-09", "2026-09-10", "2026-09-11", "2026-09-14", "2026-09-15", "2026-09-16", "2026-09-17", "2026-09-18", "2026-09-21", "2026-09-22", "2026-09-23", "2026-09-28", "2026-09-29", "2026-09-30", "2026-10-01", "2026-10-02", "2026-10-06", "2026-10-07", "2026-10-08", "2026-10-12", "2026-10-13", "2026-10-14", "2026-10-15", "2026-10-16", "2026-10-19", "2026-10-20", "2026-10-21", "2026-10-22", "2026-10-23", "2026-10-26", "2026-10-27", "2026-10-28", "2026-10-29", "2026-10-30", "2026-11-02", "2026-11-03", "2026-11-04", "2026-11-05", "2026-11-06", "2026-11-09", "2026-11-10", "2026-11-11", "2026-11-12"], "datasets": [{"label": "네이버 1년 종가 추이 (2025-11-12 ~ 2026-11-12)", "data": [263500, 265500, 253500, 255000, 249000, 248500, 257000, 262500, 261000, 253000, 263500, 251500, 244000, 243000, 243000, 246500, 247000, 249500, 249000, 248000, 244500, 243500, 244500, 240500, 231500, 231000, 230500, 235500, 238000, 237000, 236500, 231500, 242000, 242500, 247000, 249500, 260000, 252500, 251000, 254000, 255500, 264500, 259500, 247500, 245500, 238000, 244000, 238500, 245500, 266000, 272500, 281500, 277500, 287000, 275000, 268000, 269000, 264500, 257000, 249000, 250000, 254000, 257500, 255500, 252500, 253000, 254500, 255500, 255000, 253000, 260500, 254500, 236000, 208000, 220000, 222500, 218500, 220500, 222000, 222000, 223000, 218000, 224000, 226500, 220500, 221500, 209000, 213500, 215500, 211500, 211500, 207000, 201500, 210500, 195800, 197500, 196800, 195900, 201500, 201500, 202000, 199000, 201500, 211000, 218500, 216500, 213500, 214000, 214000, 217500, 214000, 215000, 219500, 220000, 211000, 209000, 208000, 207500, 215000, 211500, 204000, 201500, 213000, 203500, 200000, 198100, 191500, 199500, 203000, 200000, 198800, 205000, 234000, 271500, 280500, 267500, 255500, 279000, 257000, 227000, 224000, 247000, 248000, 242000, 243500, 235000, 229500, 222000, 202500, 199400, 199700, 196400, 204000, 199000, 197400, 199900, 195800, 196600, 197200, 192700, 184400, 191300, 188000, 183200, 189600, 190000, 185900, 193000, 196900, 220000, 207500, 225000, 210000, 201500, 194700, 208000, 207500, 226500, 229000, 226000, 210000, 211500, 214000, 215500, 226500, 228000, 217000, 208000, 219500, 222000, 223500, 220500, 220000, 216500, 220500, 217000, 215000, 209000, 207500, 213500, 218000, 214500, 210000, 208000, 206500, 204000, 206000, 201500, 199000, 197700, 197900, 201000, 194700, 197700, 194800, 193700, 191200, 192200, 191100, 189000, 183800, 180500, 178000, 179400, 173600, 180000, 182900, 178000, 179500, 176400, 173600, 174200, 174300, 178000, 174900, 172300, 175400, 169000, 170800, 184900, 190200, 187100, 193000, 194300, 181300], "borderColor": "#3182F6", "backgroundColor": "rgba(49,130,246,0.18)", "fill": true, "tension": 0.28, "pointRadius": 0, "pointHitRadius": 6, "pointHoverRadius": 5, "pointHoverBackgroundColor": "#3182F6", "pointHoverBorderColor": "#FFFFFF", "pointHoverBorderWidth": 2, "borderWidth": 2.2}]}, "options": {"responsive": true, "maintainAspectRatio": false, "interaction": {"mode": "index", "intersect": false}, "plugins": {"legend": {"display": false}, "tooltip": {"backgroundColor": "#191F28", "titleColor": "#B0B8C1", "bodyColor": "#FFFFFF", "displayColors": false, "padding": 10, "cornerRadius": 8, "titleFont": {"size": 11, "weight": "normal"}, "bodyFont": {"size": 13, "weight": "bold"}}}, "scales": {"x": {"ticks": {"maxTicksLimit": 6, "font": {"size": 10, "family": "Pretendard"}, "color": "#8B95A1"}, "grid": {"display": false}, "border": {"display": false}}, "y": {"position": "right", "ticks": {"font": {"size": 10, "family": "Pretendard"}, "color": "#8B95A1", "padding": 4}, "grid": {"color": "#F2F4F6", "drawTicks": false}, "border": {"display": false}}}}});</script>
+</body>
+</html>

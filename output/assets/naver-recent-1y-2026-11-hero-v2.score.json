@@ -1,0 +1,14 @@
+{
+  "slug": "naver-recent-1y-2026-11",
+  "candidate": 2,
+  "image_path": "assets/naver-recent-1y-2026-11-hero-v2.png",
+  "prompt_path": "assets/naver-recent-1y-2026-11-hero-v2.prompt.txt",
+  "report_fit": 7,
+  "company_sector_fit": 8,
+  "visual_clarity": 8,
+  "premium_quality": 8,
+  "restraint": 5,
+  "notes": "구도는 좋으나 천장 표지판에 읽히는 글자가 보여 규칙 위반. 10점 감점 후 탈락.",
+  "penalty": -10,
+  "total": 26
+}

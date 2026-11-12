@@ -1,0 +1,13 @@
+{
+  "slug": "naver-recent-1y-2026-11",
+  "candidate": 3,
+  "image_path": "assets/naver-recent-1y-2026-11-hero-v3.png",
+  "prompt_path": "assets/naver-recent-1y-2026-11-hero-v3.prompt.txt",
+  "report_fit": 7,
+  "company_sector_fit": 8,
+  "visual_clarity": 8,
+  "premium_quality": 7,
+  "restraint": 7,
+  "notes": "서버 랙 복도. 글자는 없으나 조명 요소가 산만하고 v1보다 메시지(투자 부담) 전달이 약함.",
+  "total": 37
+}
