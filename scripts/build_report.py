@@ -342,9 +342,11 @@ def transform_body(body: str, price_payloads: list[dict[str, Any]]) -> tuple[str
     # Output spec renders any draft disclaimer as the single footer note.
     body = DISCLAIMER_SECTION_RE.sub("", body).strip()
     # Keep source details but remove bracketed inline verification markers globally.
+    # Render stat-cards first: strip_source_markers() removes whitespace before ':' and would
+    # otherwise glue the closing "::" fence onto the previous line and break STAT_CARD_RE.
+    body = STAT_CARD_RE.sub(render_stat_card, body)
     body = SOURCE_MARKER_PREFIX_RE.sub("- ", body)
     body = strip_source_markers(body)
-    body = STAT_CARD_RE.sub(render_stat_card, body)
 
     def replace_price_chart(_match: re.Match[str]) -> str:
         nonlocal chart_index
@@ -387,7 +389,7 @@ def render_toc(toc: list[tuple[str, str]]) -> str:
     return f'<nav class="toc" aria-label="목차">{links}</nav>'
 
 
-def build_report(slug: str, *, reuse_existing_price_chart: bool = False) -> tuple[Path, list[Path], Path]:
+def build_report(slug: str, *, reuse_existing_price_chart: bool = False, layout: str = "toss") -> tuple[Path, list[Path], Path]:
     paths = artifact_paths(slug)
     precheck = validate_contract(
         slug,
@@ -421,7 +423,8 @@ def build_report(slug: str, *, reuse_existing_price_chart: bool = False) -> tupl
         reuse_existing_price_chart=reuse_existing_price_chart,
     )
     body_html, chart_scripts, toc = transform_body(draft_body, price_payloads)
-    html_doc = render_html_document(
+    renderer = render_html_document_report_shell if layout == "report-shell" else render_html_document
+    html_doc = renderer(
         slug=slug,
         draft_fm=draft_fm,
         body_html=body_html,
@@ -855,9 +858,89 @@ function createTossChart(chartId, config) {{
 </html>
 """
 
+
+# Report-shell layout ----------------------------------------------------------
+# `--layout report-shell` renders the docs/visual-system.md style used by
+# output/nvidia-recent-4m-2026-05.html (single report sheet, TOC, theme toggle),
+# while keeping the contract elements: hero image card and yfinance price chart.
+REPORT_SHELL_GENERATOR = "stock-report-harness report-shell-builder"
+REPORT_SHELL_CSS_PATH = Path(__file__).resolve().parent / "templates" / "report-shell.css"
+LAYOUTS = ("toss", "report-shell")
+
+
+def render_html_document_report_shell(
+    *,
+    slug: str,
+    draft_fm: dict[str, Any],
+    body_html: str,
+    toc: list[tuple[str, str]],
+    selected_image: Path,
+    chart_scripts: list[tuple[str, dict[str, Any]]],
+) -> str:
+    title = frontmatter_value(draft_fm, "title") or slug
+    subtitle = frontmatter_value(draft_fm, "subtitle")
+    created_at = frontmatter_value(draft_fm, "created_at")
+    hero_src = f"assets/{selected_image.name}"
+    # Toss-only helpers (8px dividers, section subtitles, lead wrapper) are not part of this layout.
+    body_html = re.sub(r'<hr class="divider">', "", body_html)
+    body_html = re.sub(r'<p class="section-sub">.*?</p>', "", body_html, flags=re.S)
+    body_html = re.sub(r'<div class="lead-content">(.*?)(?:\s*<hr>)?\s*</div>', lambda m: m.group(1), body_html, count=1, flags=re.S)
+    shell_css = REPORT_SHELL_CSS_PATH.read_text(encoding="utf-8")
+    script_lines = []
+    for chart_id, config in chart_scripts:
+        cfg = dict(config)
+        cfg.pop("currency", None)
+        script_lines.append(f"new Chart(document.getElementById({json.dumps(chart_id)}), {json.dumps(cfg, ensure_ascii=False)});")
+    scripts = "\n".join(script_lines)
+    disclaimer = (
+        f"이 리포트는 교육 및 정보 제공 목적을 위해 작성되었습니다.\n"
+        f"특정 종목의 매수·매도를 권유하지 않으며 투자 자문이 아닙니다.\n"
+        f"모든 투자 판단과 그 결과에 대한 책임은 투자자 본인에게 있습니다.\n"
+        f"리포트 내용은 {created_at or datetime.now(timezone.utc).date().isoformat()} 기준 공개 정보를 바탕으로 정리되었으며,\n"
+        f"이후 변경된 사실이 반영되지 않았을 수 있습니다."
+    )
+    return f"""<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="generator" content="{REPORT_SHELL_GENERATOR}">
+<meta name="report-slug" content="{html_attr(slug)}">
+<title>{html_text(title)}</title>
+<meta property="og:title" content="{html_attr(title)}">
+<meta property="og:description" content="{html_attr(subtitle)}">
+<meta property="og:type" content="article">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.min.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3"></script>
+<style>
+{shell_css}</style>
+</head>
+<body>
+<button class="theme-toggle" aria-label="테마 전환" onclick="document.documentElement.toggleAttribute('data-theme-dark')">☾</button>
+{render_toc(toc)}
+<main class="report-shell">
+  <header class="report-header">
+    <h1>{html_text(title)}</h1>
+    {f'<p class="subtitle">{html_text(subtitle)}</p>' if subtitle else ''}
+    {f'<p class="report-date">{html_text(created_at)}</p>' if created_at else ''}
+    <figure class="hero-image"><img src="{html_attr(hero_src)}" alt="{html_attr(title)} hero image" loading="eager"></figure>
+  </header>
+  {body_html}
+  <footer id="disclaimer" aria-label="투자 유의사항"><p>{html_text(disclaimer)}</p></footer>
+</main>
+<script>Chart.defaults.font.family = '"Pretendard Variable", "Pretendard", -apple-system, sans-serif';
+if (window['chartjs-plugin-annotation']) {{ Chart.register(window['chartjs-plugin-annotation']); }}
+{scripts}</script>
+</body>
+</html>
+"""
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("slug")
+    parser.add_argument("--layout", choices=LAYOUTS, default="toss", help="HTML layout: toss (default, design/toss_design.md) or report-shell (docs/visual-system.md, nvidia-style)")
     parser.add_argument(
         "--reuse-existing-price-chart",
         action="store_true",
@@ -865,7 +948,7 @@ def main(argv: list[str] | None = None) -> int:
     )
     args = parser.parse_args(argv)
 
-    html_path, price_paths, image_path = build_report(args.slug, reuse_existing_price_chart=args.reuse_existing_price_chart)
+    html_path, price_paths, image_path = build_report(args.slug, reuse_existing_price_chart=args.reuse_existing_price_chart, layout=args.layout)
     print("Build complete")
     print(f"HTML: {rel(html_path)}")
     print("Price chart JSON:")

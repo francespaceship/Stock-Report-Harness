@@ -57,6 +57,8 @@ SELECTED_IMAGE_PATH_KEYS = (
     "selected_path",
     "selected_file",
 )
+# image-manifest.json `generation_method` 허용값의 단일 출처. 검증기/훅/실행기는 이 상수를 참조한다.
+ALLOWED_IMAGE_GENERATION_METHODS = ("codex-cli-imagegen", "pollinations-api")
 PROHIBITED_IMAGE_GENERATION_TERMS = ("pillow", "procedural", "programmatic", "svg", "placeholder", "blank")
 
 
@@ -89,7 +91,7 @@ def artifact_paths(slug: str) -> ArtifactPaths:
 
 def rel(path: Path) -> str:
     try:
-        return str(path.relative_to(ROOT))
+        return path.relative_to(ROOT).as_posix()  # frontmatter 경로 표기와 OS 무관하게 비교
     except ValueError:
         return str(path)
 

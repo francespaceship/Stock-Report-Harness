@@ -14,6 +14,19 @@ Claude Code를 열고 위 명령을 입력하면, 계획 → 리서치 → 원�
 
 `plan/<slug>.md`가 후속 단계의 단일 기준 문서이며, 모든 산출물은 같은 `slug`의 선행 파일을 참조합니다.
 
+## 예시 리포트 (HTML)
+
+생성된 리포트 예시입니다. 링크를 누르면 브라우저에서 바로 렌더링된 결과를 볼 수 있습니다.
+
+| 종목 | 기간 | 미리보기 | 파일 |
+| --- | --- | --- | --- |
+| 삼성전자 | 최근 30일 | [열기](https://htmlpreview.github.io/?https://github.com/francespaceship/Stock-Report-Harness/blob/main/output/samsung-electronics-recent-30d-2026-05.html) | [`output/samsung-electronics-recent-30d-2026-05.html`](output/samsung-electronics-recent-30d-2026-05.html) |
+| 삼성전자 | 최근 1년 | [열기](https://htmlpreview.github.io/?https://github.com/francespaceship/Stock-Report-Harness/blob/main/output/samsung-electronics-recent-1y-2026-05.html) | [`output/samsung-electronics-recent-1y-2026-05.html`](output/samsung-electronics-recent-1y-2026-05.html) |
+| NVIDIA | 최근 4개월 | [열기](https://htmlpreview.github.io/?https://github.com/francespaceship/Stock-Report-Harness/blob/main/output/nvidia-recent-4m-2026-05.html) | [`output/nvidia-recent-4m-2026-05.html`](output/nvidia-recent-4m-2026-05.html) |
+| SK하이닉스 | 참고 composition | [열기](https://htmlpreview.github.io/?https://github.com/francespaceship/Stock-Report-Harness/blob/main/sample/skhynix.html) | [`sample/skhynix.html`](sample/skhynix.html) |
+
+로컬에서는 파일을 브라우저로 직접 열어도 됩니다. 히어로 이미지는 `output/assets/`를 상대 경로로 참조합니다.
+
 ## 파이프라인
 
 ```text
@@ -92,12 +105,12 @@ server.js              output 미리보기 서버
 
 ### Image
 
-- `python3 scripts/run_stock_image_codex.py <slug>`가 Codex CLI를 열어 `imagegen` skill / built-in `image_gen`으로 hero 후보 3개를 만들고 평가·선택 기록을 남깁니다.
+- `python3 scripts/run_stock_image_pollinations.py <slug>`가 Pollinations.ai gen API로 hero 후보 3개를 만듭니다(인증: `POLLINATIONS_API_KEY` 환경변수, 기본 모델 `black-forest-labs/flux.1-schnell`). 채점·선택은 `/stock-image`를 실행하는 Claude 세션이 PNG를 직접 보고 기록하고, `--finalize`로 검증·완료 처리합니다.
 - 필수 출력: `output/assets/<slug>-hero-v1~v3.*`, score JSON, image manifest, `selected-image.json`
 - 이미지에는 텍스트, 숫자, 티커, 로고, 워터마크, UI 스크린샷을 넣지 않습니다.
-- image manifest는 `status: complete`, `generation_method: codex-cli-imagegen`, `generated_with`를 포함해야 하며, procedural/Pillow/SVG/placeholder 방식은 build 검증에서 실패합니다.
+- image manifest는 `status: complete`, `generation_method: pollinations-api`(레거시 `codex-cli-imagegen` 허용), `generated_with`를 포함해야 하며, procedural/Pillow/SVG/placeholder 방식은 build 검증에서 실패합니다.
 - `selected-image.json`은 최소 `slug`, `selected_candidate`, `image_path` 또는 `selected_image`, `reason`, `generated_with`를 포함합니다. 경로는 `assets/<file>.png` 또는 `output/assets/<file>.png`처럼 resolver가 찾을 수 있는 값으로 둡니다.
-- 이미지 생성 도구가 없으면 prompt 파일과 blocked manifest만 남기고 build로 진행하지 않습니다.
+- API 키가 없거나 호출이 실패하면(402 포함) prompt 파일과 blocked manifest만 남기고 build로 진행하지 않습니다. 로컬 대체 이미지는 만들지 않습니다.
 
 `selected-image.json` 예시:
 
@@ -107,7 +120,7 @@ server.js              output 미리보기 서버
   "selected_candidate": 2,
   "image_path": "assets/<slug>-hero-v2.png",
   "reason": "리포트 결론과 가장 잘 맞음",
-  "generated_with": "Codex CLI $imagegen / built-in image_gen"
+  "generated_with": "Pollinations.ai gen API (model: black-forest-labs/flux.1-schnell)"
 }
 ```
 
@@ -175,8 +188,9 @@ python3 scripts/build_report.py <slug>
 이미지 단계:
 
 ```bash
-python3 scripts/run_stock_image_codex.py <slug>
-python3 scripts/run_stock_image_codex.py <slug> --dry-run  # Codex 프롬프트 확인용
+python3 scripts/run_stock_image_pollinations.py <slug> --motif "<영어 시각 묘사>"
+python3 scripts/run_stock_image_pollinations.py <slug> --dry-run   # 전송 프롬프트 확인용(키 마스킹)
+python3 scripts/run_stock_image_pollinations.py <slug> --finalize  # 채점·선택 파일 검증 후 complete
 ```
 
 최신 뉴스 5건 추출:
@@ -207,6 +221,6 @@ node server.js samsung-electronics-recent-1y-2026-05
 ```
 
 ## 의존 도구
-- Python 3.11+, `requirements.txt`의 yfinance/Markdown/PyYAML, Node.js 18+, Claude/Codex CLI
+- Python 3.11+, `requirements.txt`의 yfinance/Markdown/PyYAML, Node.js 18+, Claude/Codex CLI, 환경변수 `POLLINATIONS_API_KEY`(이미지 생성용)
 - 선택 도구: jq(수동 JSON 점검용)
 - Node 미리보기/검증 스크립트: `npm run check`, `npm run test`, `npm start -- <slug>`

@@ -15,6 +15,7 @@ from pathlib import Path
 from typing import Any
 
 from report_contract_lib import (
+    ALLOWED_IMAGE_GENERATION_METHODS,
     CANONICAL_SELECTED_IMAGE_PATH_KEYS,
     REQUIRED_PLAN_FRONTMATTER,
     REQUIRED_DRAFT_SECTIONS,
@@ -80,6 +81,19 @@ TOSS_HTML_CHECKS: tuple[tuple[str, re.Pattern[str]], ...] = (
         "footer investment disclaimer region",
         re.compile(r'<footer\s+id=["\']disclaimer["\'][^>]*aria-label=["\']투자 유의사항["\']', re.I),
     ),
+)
+
+
+# report-shell layout (docs/visual-system.md, nvidia-style). Selected via the generator meta tag.
+REPORT_SHELL_GENERATOR_RE = re.compile(r'<meta\s+name=["\']generator["\']\s+content=["\']stock-report-harness\s+report-shell-builder["\']', re.I)
+REPORT_SHELL_HTML_CHECKS: tuple[tuple[str, re.Pattern[str]], ...] = (
+    ("report-shell main", re.compile(r'<main\s+class=["\']report-shell["\']', re.I)),
+    ("table of contents nav", re.compile(r'<nav\s+class=["\']toc["\']', re.I)),
+    ("Pretendard font stack", re.compile(r"Pretendard", re.I)),
+    ("hero image card", re.compile(r'<figure\s+class=["\']hero-image["\'][^>]*>\s*<img\s+', re.I | re.S)),
+    ("Chart.js script", re.compile(r'<script\s+src=["\'][^"\']*chart\.js@4[^"\']*["\']', re.I)),
+    ("price chart canvas", re.compile(r'<canvas\s+id=["\']chart-\d+["\']', re.I)),
+    ("footer investment disclaimer region", re.compile(r'<footer\s+id=["\']disclaimer["\'][^>]*aria-label=["\']투자 유의사항["\']', re.I)),
 )
 
 
@@ -249,9 +263,9 @@ def _validate_selected_image(slug: str, result: ValidationResult) -> None:
                 else:
                     result.check("image manifest status complete")
                 generation_method = str(manifest_payload.get("generation_method") or "").strip()
-                if generation_method != "codex-cli-imagegen":
+                if generation_method not in ALLOWED_IMAGE_GENERATION_METHODS:
                     result.error(
-                        f"image manifest `generation_method`는 codex-cli-imagegen 이어야 함: "
+                        f"image manifest `generation_method`는 {' | '.join(ALLOWED_IMAGE_GENERATION_METHODS)} 중 하나여야 함: "
                         f"{generation_method!r} ({rel(paths.image_manifest_json)})"
                     )
                 if not str(manifest_payload.get("generated_with") or "").strip():
@@ -378,6 +392,14 @@ def _validate_html(slug: str, require_html: bool, result: ValidationResult) -> N
         image_name = image_path.name
         if image_name not in text:
             result.error(f"최종 HTML에 selected hero 이미지 참조 없음: {image_name}")
+    if REPORT_SHELL_GENERATOR_RE.search(text):
+        missing_shell = [label for label, pattern in REPORT_SHELL_HTML_CHECKS if not pattern.search(text)]
+        if missing_shell:
+            result.error(f"최종 HTML이 report-shell 레이아웃 필수 요소를 만족하지 않음: {', '.join(missing_shell)} ({rel(paths.html)})")
+        else:
+            result.check("HTML follows report-shell layout (docs/visual-system.md)")
+        result.check("HTML exists, marker-free, and references selected image")
+        return
     missing_toss_checks = [label for label, pattern in TOSS_HTML_CHECKS if not pattern.search(text)]
     if missing_toss_checks:
         result.error(

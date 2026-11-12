@@ -75,10 +75,10 @@ plan → research → draft → image → review → build
 ### 4단계: 이미지
 
 1. plan, research, draft가 모두 존재하는지 확인한다.
-2. `/stock-image` 스킬 계약에 따라 Codex CLI를 열어 `imagegen` skill로 히어로 이미지 3장을 생성한다.
-   - 프롬프트 3개 → PNG 3장 → 스코어링 → 1장 선택
+2. `/stock-image` 스킬 계약에 따라 Pollinations.ai API(`scripts/run_stock_image_pollinations.py`)로 히어로 이미지 3장을 생성한다.
+   - 프롬프트 3개 → PNG 3장 → Claude 세션이 직접 확인·스코어링 → 1장 선택 → `--finalize`
    - `output/assets/<slug>-selected-image.json` 생성
-3. Codex CLI 또는 이미지 생성 도구가 없으면 프롬프트와 blocked 매니페스트만 남기고 `blocked`로 보고한다.
+3. `POLLINATIONS_API_KEY`가 없거나 API가 실패(402 포함)하면 프롬프트와 blocked 매니페스트만 남기고 `blocked`로 보고한다. 로컬 대체 이미지를 만들지 않는다.
 4. **멈추지 않고 즉시 5단계로 진행한다.**
 
 ### 5단계: 리뷰

@@ -8,5 +8,5 @@ argument-hint: "<slug>"
 **slug**: $ARGUMENTS
 
 `.claude/skills/stock-image/SKILL.md`를 읽고 그대로 수행하세요.
-이 단계는 직접 이미지 생성 도구를 호출하지 말고 Codex CLI를 열어 `imagegen` skill로 생성하게 합니다.
+이미지 생성은 `scripts/run_stock_image_pollinations.py`(Pollinations.ai API)로 수행하고, 채점·선택은 이 세션이 생성된 PNG를 직접 보고 수행합니다. 로컬에서 이미지를 그려 대체하지 마세요.
 완료 후 선택된 hero 이미지와 다음 단계 `/stock-review <slug>`를 알려주세요.

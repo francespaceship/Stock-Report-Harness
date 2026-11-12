@@ -35,11 +35,13 @@
 
 ## Image 계약
 - `/stock-image`는 plan, research, draft 전체 메시지와 결론 톤을 반영해 hero 후보 3개를 만든다.
-- 이미지 생성은 `python3 scripts/run_stock_image_codex.py <slug>`로 Codex CLI를 열어 `imagegen` skill / built-in `image_gen`이 수행하게 한다.
+- 이미지 생성은 `python3 scripts/run_stock_image_pollinations.py <slug>`가 Pollinations.ai gen API(`POLLINATIONS_API_KEY` 환경변수, 모델은 `--model`/`STOCK_IMAGE_POLLINATIONS_MODEL`)로 후보 3장을 만든다. 스크립트는 생성만 담당하고, 채점·선택(score.json, image-review.txt, selected-image.json)은 `/stock-image`를 실행하는 Claude 세션이 PNG를 직접 보고 작성한 뒤 `--finalize`로 검증·완료 처리한다.
+- Codex CLI 경로(`scripts/run_stock_image_codex.py`, `generation_method: codex-cli-imagegen`)는 레거시로 남겨 두며 허용값은 `report_contract_lib.ALLOWED_IMAGE_GENERATION_METHODS` 한 곳에서 관리한다.
+- API 실패 시 로컬에서 이미지를 만들어 대체하지 않고 `blocked`로 끝낸다. 키 값은 코드·로그·manifest·커밋 어디에도 남기지 않는다.
 - 로컬/Pillow/SVG/빈 placeholder를 실제 hero 이미지로 대체하지 않는다.
 - 이미지에는 텍스트, 숫자, 티커, 로고, 워터마크, UI 스크린샷을 넣지 않는다.
 - 필수 산출물: `output/assets/<slug>-hero-v1~v3.prompt.txt`, `hero-v1~v3.png`, `hero-v1~v3.score.json`, `image-manifest.json`, `selected-image.json`.
-- `image-manifest.json`은 `status: complete`, `generation_method: codex-cli-imagegen`, `generated_with`를 가져야 하며, procedural/Pillow/SVG/placeholder 방식은 실패로 본다.
+- `image-manifest.json`은 최종적으로 `status: complete`, `generation_method: pollinations-api`(또는 레거시 `codex-cli-imagegen`), `generated_with`(예: `Pollinations.ai gen API (model: <모델 ID>)`)를 가져야 하며(생성 직후 중간 상태는 `images_generated`), procedural/Pillow/SVG/placeholder 방식은 실패로 본다.
 - `selected-image.json`은 최소 `slug`, `selected_candidate`, `image_path` 또는 `selected_image`, `reason`, `generated_with`를 포함하고, 경로는 `assets/<file>.png` 또는 `output/assets/<file>.png`처럼 검증기가 찾을 수 있는 값으로 쓴다.
 - 최종 HTML에는 선택된 hero 이미지 1장이 반드시 있어야 하며, 없으면 build를 성공 처리하지 않는다.
 
@@ -60,7 +62,7 @@
 - plan 없이 research/draft/build 산출물을 만들지 않는다.
 - research 없이 draft를 만들지 않고, review 없이 build하지 않는다.
 - 임의 가격 데이터, 샘플링 차트, 조작한 기사 URL을 넣지 않는다.
-- `browser-use`와 직접 LLM API 키 호출은 사용하지 않는다.
+- `browser-use`와 직접 LLM API 키 호출은 사용하지 않는다. 단, hero 이미지 생성용 Pollinations.ai API는 예외다(`POLLINATIONS_API_KEY` 환경변수로만 인증, 키를 파일에 저장하지 않음).
 - 가격 데이터는 `yfinance`를 사용하고, 웹 리서치는 검증 가능한 출처나 Playwright MCP를 우선한다.
 - macOS/Linux는 `.sh`, Windows는 `.ps1` 스크립트를 우선 사용한다.
 

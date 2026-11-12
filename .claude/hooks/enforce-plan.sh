@@ -11,6 +11,8 @@ python3 - "$ROOT" "$TMP_INPUT" <<'PY'
 import json, re, sys
 from pathlib import Path
 root = Path(sys.argv[1]).resolve()
+sys.path.insert(0, str(root / 'scripts'))
+from report_contract_lib import ALLOWED_IMAGE_GENERATION_METHODS  # stdlib-only 공용 상수
 raw = Path(sys.argv[2]).read_text(encoding="utf-8", errors="ignore")
 try:
     data = json.loads(raw) if raw.strip() else {}
@@ -79,7 +81,7 @@ def selected_image_exists(slug: str) -> bool:
         return False
     if manifest_payload.get('status') != 'complete':
         return False
-    if manifest_payload.get('generation_method') != 'codex-cli-imagegen':
+    if manifest_payload.get('generation_method') not in ALLOWED_IMAGE_GENERATION_METHODS:
         return False
     if not str(manifest_payload.get('generated_with') or '').strip():
         return False
